@@ -5,4 +5,4 @@ docker run --rm -it \
 	-v $PWD/package.json:/app/package.json \
 	-v $PWD/../sv-mongo-graph-utils/src/:/app/node_modules/@simpleview/sv-mongo-graph-utils \
 	--add-host=graphql.kube.simpleview.io:192.168.50.100 \
-	sv-mongo-graph-utilst:local /bin/sh
+	sv-mongo-graph-utils:local /bin/sh
