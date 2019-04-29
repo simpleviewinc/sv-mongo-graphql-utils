@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -f ./dev/Dockerfile . -t sv-mongo-graph-utils:local
+docker build -f ./dev/Dockerfile . -t sv-mongo-graphql-utils:local
