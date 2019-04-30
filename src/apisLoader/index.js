@@ -2,7 +2,6 @@ const { MongoClient } = require("mongodb");
 const fs = require("fs");
 const util = require("util");
 const Api = require("./Api");
-
 const readdirP = util.promisify(fs.readdir);
 
 module.exports = async function({ connectionString, dbName, modelDirectoryRoot }) {
@@ -26,5 +25,8 @@ module.exports = async function({ connectionString, dbName, modelDirectoryRoot }
 		apis[name] = api;
 	}
 	
-	return apis;
+	return {
+		conn,
+		apis
+	}
 }

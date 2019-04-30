@@ -1,5 +1,5 @@
-const { ObjectId } = require("mongodb");
 const jsvalidator = require("jsvalidator");
+const { ObjectId } = require("mongodb");
 
 const Api = function(args) {
 	const self = this;
@@ -34,7 +34,7 @@ Api.prototype._convertValidation = function(enforceRequired) {
 	for(let [name, val] of Object.entries(self._def.schema.properties)) {
 		let entry = {
 			name,
-			required : enforceRequired && self._def.schema.required.includes(name)
+			required : enforceRequired && self._def.schema.required && self._def.schema.required.includes(name)
 		}
 		Object.assign(entry, createSchemaEntry(val));
 		
@@ -67,14 +67,17 @@ Api.prototype.init = async function() {
 	});
 
 	// create indexes
-	for(let index of self._def.indexes) {
-		await self.collection.createIndex(index.keys, index.options)
+	if (self._def.indexes !== undefined) {
+		for(let index of self._def.indexes) {
+			await self.collection.createIndex(index.keys, index.options)
+		}
 	}
 };
 
 // wrap updateOne to provide validation
 Api.prototype.updateOne = function(filter, update, options) {
 	const self = this;
+	
 	if (update.$set !== undefined && update.$setOnInsert !== undefined) {
 		// if we have a $set and a $setOnInsert we can merge them together and enforce required keys and types
 		const merged = Object.assign({}, update.$set, update.$setOnInsert);
@@ -99,6 +102,15 @@ Api.prototype.updateOne = function(filter, update, options) {
 	return self.collection.updateOne(filter, update, options);
 }
 
+// wrap insertOne to provide validation
+Api.prototype.insertOne = function(data) {
+	const self = this;
+	
+	self._validate(data, true);
+	
+	return self.collection.insertOne(data);
+}
+
 // wrap insertMany to provide validation
 Api.prototype.insertMany = function(data) {
 	const self = this;
@@ -116,7 +128,8 @@ const methods = [
 	"countDocuments",
 	"distinct",
 	"deleteOne",
-	"deleteMany"
+	"deleteMany",
+	"updateMany"
 ];
 methods.forEach(function(val, i) {
 	Api.prototype[val] = function(...args) {
@@ -138,6 +151,8 @@ function createSchemaEntry(obj) {
 			}
 			
 			return temp;
+		case "int":
+			return { type : "number" };
 		case "date":
 			return { type : "date" };
 		case "array":
@@ -146,8 +161,6 @@ function createSchemaEntry(obj) {
 			return temp;
 		case "object":
 			return { type : "object" };
-		case "int":
-			return { type : "int" };
 		case "bool":
 			return { type : "boolean" };
 		default:

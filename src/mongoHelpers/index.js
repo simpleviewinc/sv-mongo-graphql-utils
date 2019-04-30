@@ -37,6 +37,16 @@ function createOptions(options = {}) {
 	return newOptions;
 }
 
+function setUnsetKey({ options, key, value }) {
+	if (value === undefined) {
+		options.$unset = options.$unset || {};
+		options.$unset[key] = "";
+	} else {
+		options.$set = options.$set || {};
+		options.$set[key] = value;
+	}
+}
+
 function testId(str) {
 	const encoded = Buffer.from(str).toString("hex");
 	const padded = encoded.padStart(24, "0");
@@ -47,4 +57,5 @@ module.exports = {
 	createFilter,
 	createOptions,
 	testId,
+	setUnsetKey,
 }

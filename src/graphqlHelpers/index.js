@@ -25,15 +25,52 @@ function findResultResolver(apiName) {
 	}
 }
 
+function idResolver(parent, args, context, info) {
+	if (parent._id === undefined) { return; }
+	
+	return parent._id.toString();
+}
+
 function mapKeyResolver(key) {
 	return function(parent) {
 		return parent[key];
 	}
 }
 
+function removeResultResolver(apiName) {
+	return {
+		success : function() {
+			return true;
+		},
+		message :function(parent, args, { apis }, info) {
+			if (parent.rtn === undefined) {
+				throw new Error("removeResultResolver 'message' resolver requires 'rtn' to be returned from primary resolver");
+			}
+			
+			const api = apis[apiName];
+			const label = parent.rtn.deletedCount === 1 ? api.label : api.pluralLabel;
+			const message = `${parent.rtn.deletedCount} ${label} removed.`;
+			
+			return message;
+		}
+	}
+}
+
 function successResolver() {
 	return function({ success }) {
 		return ( success !== undefined ) ? success : true;
+	}
+}
+
+function toStringResolver(key) {
+	return function(parent, args, context, info) {
+		if (parent[key] === undefined) { return; }
+		
+		if (parent[key] instanceof Array) {
+			return parent[key].map(val => val.toString());
+		} else {
+			return parent[key].toString();
+		}
 	}
 }
 
@@ -64,6 +101,9 @@ function upsertResultResolver(apiName) {
 
 module.exports = {
 	findResultResolver,
+	idResolver,
 	mapKeyResolver,
+	removeResultResolver,
+	toStringResolver,
 	upsertResultResolver,
 }
