@@ -3,11 +3,44 @@ const { ObjectId } = require("mongodb");
 function createFilter(filter = {}) {
 	const newFilter = {};
 	
-	for(var i in filter) {
-		if (i === "id") {
-			newFilter._id = filter[i];
+	function initArr(name) {
+		newFilter[name] = newFilter[name] || [];
+	}
+	
+	for(let [key, val] of Object.entries(filter)) {
+		if (key === "id") {
+			newFilter._id = val;
+		} else if (key === "WHERE") {
+			// WHERE clauses push to an $and array to avoid conflicts with existing filters on existing keys
+			initArr("$and");
+			const andFilter = {};
+			for(let [key2, val2] of Object.entries(val)) {
+				andFilter[key2] = {};
+				for(let [key3, val3] of Object.entries(val2)) {
+					andFilter[key2][`$${key3}`] = val3;
+				}
+			}
+			newFilter["$and"].push(andFilter);
+		} else if (key === "OR") {
+			initArr("$or");
+			for(let [key2, val2] of Object.entries(val)) {
+				const orFilter = createFilter(val2);
+				newFilter["$or"].push(orFilter);
+			}
+		} else if (key === "AND") {
+			initArr("$and");
+			for(let [key2, val2] of Object.entries(val)) {
+				const andFilter = createFilter(val2);
+				newFilter["$and"].push(andFilter);
+			}
+		} else if (key === "$or") {
+			initArr("$or");
+			newFilter["$or"].push(...val);
+		} else if (key === "$and") {
+			initArr("$and");
+			newFilter["$and"].push(...val);
 		} else {
-			newFilter[i] = filter[i];
+			newFilter[key] = val;
 		}
 	}
 	

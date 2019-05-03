@@ -7,7 +7,7 @@ describe(__filename, function() {
 	describe("createFilter", function() {
 		const tests = [
 			{
-				name : "should create a filter",
+				name : "should create a basic filter",
 				args : {
 					data : {
 						id : '000000000000000000000031',
@@ -33,15 +33,64 @@ describe(__filename, function() {
 					}
 				}
 			},
+			{
+				name : "should create a filter with a WHERE clause",
+				args : {
+					data : {
+						foo : 'bar',
+						WHERE : {
+							foo : { exists : true }
+						}
+					},
+					result : { 
+						foo : 'bar',
+						'$and' : [
+							{ foo : { '$exists' : true } }
+						]
+					}
+				}
+			},
+			{
+				name : "should create a filter with an AND clause",
+				args : {
+					data : {
+						foo : 'bar',
+						AND :[
+							{ bin : { '$ne' : 'baz' } },
+							{ beer : { $exists : true } }
+						]
+					},
+					result : { 
+						foo : 'bar',
+						'$and' : [
+							{ bin : { '$ne' : 'baz' } },
+							{ beer : { '$exists' : true } }
+						]
+					}
+				}
+			},
+			{
+				name : "should create a filter with an OR clause",
+				args : {
+					data : {
+						foo : 'bar',
+						OR :[
+							{ bin : 'baz' }
+						]
+					},
+					result : { 
+						foo : 'bar',
+						'$or' : [
+							{ bin : 'baz' },
+						]
+					}
+				}
+			},
 		];
 		
 		testArray(tests, function(test) {
-			try {
-				const res = mongoHelpers.createFilter(test.data);
-				deepCheck(res, test.result);
-			}catch(err){
-				deepCheck(err.message, test.errorMessage);
-			}
+			const res = mongoHelpers.createFilter(test.data);
+			deepCheck(res, test.result);
 		});
 	});
 
