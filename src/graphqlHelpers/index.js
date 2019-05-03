@@ -42,7 +42,7 @@ function removeResultResolver(apiName) {
 		success : function() {
 			return true;
 		},
-		message :function(parent, args, { apis }, info) {
+		message : function(parent, args, { apis }, info) {
 			if (parent.rtn === undefined) {
 				throw new Error("removeResultResolver 'message' resolver requires 'rtn' to be returned from primary resolver");
 			}

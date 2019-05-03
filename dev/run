@@ -1,8 +1,14 @@
 #!/bin/bash
-docker run --rm -it \
+docker network create -d bridge lib-test-network
+docker run --name mongo-db -d mongo:latest
+docker network connect lib-test-network mongo-db
+docker run --rm -it --network=lib-test-network \
 	-v $PWD/src:/app/src \
+	-v $PWD/testData:/app/testData \
 	-v $PWD/testing:/app/testing \
 	-v $PWD/package.json:/app/package.json \
 	-v $PWD/../sv-mongo-graphql-utils/src/:/app/node_modules/@simpleview/sv-mongo-graphql-utils \
-	--add-host=graphql.kube.simpleview.io:192.168.50.100 \
 	sv-mongo-graphql-utils:local /bin/sh
+docker stop mongo-db
+docker rm mongo-db
+docker network rm lib-test-network

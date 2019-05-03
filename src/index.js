@@ -1,7 +1,7 @@
 const apisLoader = require("./apisLoader");
-const schemaLoader = require("./schemaLoader");
-const mongoHelpers = require("./mongoHelpers");
 const graphqlHelpers = require("./graphqlHelpers");
+const mongoHelpers = require("./mongoHelpers");
+const schemaLoader = require("./schemaLoader");
 
 module.exports = {
 	apisLoader,

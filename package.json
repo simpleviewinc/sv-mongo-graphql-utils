@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@simpleview/mochalib": "1.0.1",
+    "@simpleview/assertlib": "1.0.1",
     "mocha": "5.2.0"
   },
   "main": "src/index.js",

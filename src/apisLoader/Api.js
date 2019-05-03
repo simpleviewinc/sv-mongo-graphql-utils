@@ -122,7 +122,7 @@ Api.prototype.insertMany = function(data) {
 	return self.collection.insertMany(data);
 }
 
-const methods = [
+const additionalMethods = [
 	"find",
 	"findOne",
 	"countDocuments",
@@ -131,7 +131,7 @@ const methods = [
 	"deleteMany",
 	"updateMany"
 ];
-methods.forEach(function(val, i) {
+additionalMethods.forEach(function(val, i) {
 	Api.prototype[val] = function(...args) {
 		var self = this;
 		return self.collection[val](...args);
@@ -151,6 +151,7 @@ function createSchemaEntry(obj) {
 			}
 			
 			return temp;
+		case "number":
 		case "int":
 			return { type : "number" };
 		case "date":
@@ -158,6 +159,7 @@ function createSchemaEntry(obj) {
 		case "array":
 			temp = { type : "array" };
 			temp.schema = createSchemaEntry(obj.items);
+			
 			return temp;
 		case "object":
 			return { type : "object" };

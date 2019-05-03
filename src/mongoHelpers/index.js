@@ -28,6 +28,10 @@ function createOptions(options = {}) {
 	if (options.sort !== undefined) {
 		const sort = {};
 		options.sort.forEach(function(val, i) {
+			if(val.field === undefined){ throw new Error(`sort field ${i} must be defined`); }
+
+			if(val.dir === undefined){ throw new Error(`${val.field} sort direction must be defined`); }
+
 			sort[val.field] = val.dir === "asc" ? 1 : -1;
 		});
 		
@@ -48,6 +52,8 @@ function setUnsetKey({ options, key, value }) {
 }
 
 function testId(str) {
+	if(typeof str !== 'string'){ throw new Error('str must be a string'); }
+
 	const encoded = Buffer.from(str).toString("hex");
 	const padded = encoded.padStart(24, "0");
 	return ObjectId(padded);
@@ -56,6 +62,6 @@ function testId(str) {
 module.exports = {
 	createFilter,
 	createOptions,
-	testId,
 	setUnsetKey,
+	testId,
 }

@@ -143,3 +143,9 @@ const resolvers = {
   test_tests_upsert_result : graphqlHelpers.upsertResultResolver("tests"),
 }
 ```
+
+# Development
+
+* Enter dev environment - `sudo npm run docker`
+* Test - (from within the dev environment) `npm test`
+* Publish - `sudo npm run publish SEMVER`
