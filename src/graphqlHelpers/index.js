@@ -54,12 +54,6 @@ function removeResultResolver(apiName) {
 	}
 }
 
-function successResolver() {
-	return function({ success }) {
-		return ( success !== undefined ) ? success : true;
-	}
-}
-
 function toStringResolver(key) {
 	return function(parent, args, context, info) {
 		if (parent[key] === undefined) { return; }
@@ -74,11 +68,15 @@ function toStringResolver(key) {
 
 function upsertResultResolver(apiName) {
 	return {
-		success : successResolver(),
+		success : function(parent) {
+			if (parent.success !== undefined) { return parent.success; }
+			
+			return true;
+		},
 		message : function(parent, args, { apis }, info) {
-			if ( parent.message.trim() !== '' ){ return parent.message; }
-
-			if ( parent.rtn === undefined ) {
+			if (parent.message !== undefined) { return parent.message; }
+			
+			if (parent.rtn === undefined) {
 				throw new Error("upsertResultResolver 'message' resolver requires 'rtn' to be returned from primary resolver");
 			}
 			
@@ -87,8 +85,11 @@ function upsertResultResolver(apiName) {
 			return message;
 		},
 		doc : async function(parent, args, { apis }, info) {
-			if ( parent.success === false ){ return null; }
-			if ( parent.filter === undefined ) {
+			if (parent.doc !== undefined) { return parent.doc }
+
+			if (parent.success === false) { return; }
+			
+			if (parent.filter === undefined) {
 				throw new Error("upsertResultResolver 'doc' resolver requires 'filter' to be returned from primary resolver");
 			}
 			

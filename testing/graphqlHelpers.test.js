@@ -282,7 +282,6 @@ describe(__filename, function() {
 					name : "Should return updated message",
 					args : {
 						parent : {
-							message : '',
 							rtn : {
 								upsertedCount : 0
 							}
@@ -294,7 +293,6 @@ describe(__filename, function() {
 					name : "Should return created message",
 					args : {
 						parent : {
-							message : '',
 							rtn : {
 								upsertedCount : 1
 							}
@@ -305,9 +303,7 @@ describe(__filename, function() {
 				{
 					name : "Should error with missing rtn",
 					args : {
-						parent : {
-							message : '',
-						},
+						parent : {},
 						error : new Error("upsertResultResolver 'message' resolver requires 'rtn' to be returned from primary resolver")
 					}
 				},
@@ -331,7 +327,7 @@ describe(__filename, function() {
 
 			const tests = [
 				{
-					name : "Should return empty object with no success",
+					name : "Should return nothing with no success",
 					args : {
 						parent : {
 							success : false,
@@ -339,7 +335,6 @@ describe(__filename, function() {
 						},
 						args : {},
 						info : {},
-						result : null
 					}
 				},
 				{
@@ -375,6 +370,7 @@ describe(__filename, function() {
 					const res = await self.upsertResultResolver.doc(test.parent, test.args, { apis : self.apis }, test.info);
 					deepCheck(res, test.result);
 				}catch(err){
+					console.log('error', err.message);
 					deepCheck(err.message, test.error.message);
 				}
 			});
