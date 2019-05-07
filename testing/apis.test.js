@@ -20,7 +20,7 @@ describe(__filename, function() {
 		});
 
 		before(async function() {
-			const connectionString = 'mongodb://mongo-db:27017/';
+			const connectionString = 'mongodb://localhost:27017/';
 			const dbName = "apijstest";
 			self.conn = await MongoClient.connect(connectionString, { useNewUrlParser : true });
 			self.db = self.conn.db(dbName);
@@ -454,7 +454,7 @@ describe(__filename, function() {
 
 	describe("apisLoader", async function(){
 		it("should load apis", async function() {
-			const connectionString = 'mongodb://mongo-db:27017/';
+			const connectionString = 'mongodb://localhost:27017/';
 			const dbName = 'apisloadertest';
 			const modelDirectoryRoot = '/app/testData/mongoModels/'
 

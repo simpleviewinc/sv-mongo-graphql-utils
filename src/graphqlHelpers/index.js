@@ -18,8 +18,6 @@ function docsResolver(apiName) {
 
 function findResultResolver(apiName) {
 	return {
-		success : successResolver(),
-		message : basicMessageResolver(),
 		docs : docsResolver(apiName),
 		count : countResolver(apiName)
 	}

@@ -21,7 +21,7 @@ describe(__filename, function() {
 						undefined_key : undefined
 					},
 					result : { 
-						_id : '000000000000000000000031',  
+						_id : '000000000000000000000031',
 						foo : 'bar',
 						bin : true,
 						obj : {
@@ -55,16 +55,39 @@ describe(__filename, function() {
 				args : {
 					data : {
 						foo : 'bar',
-						AND :[
-							{ bin : { '$ne' : 'baz' } },
+						AND : [
+							{ bin : { $ne : 'baz' } },
 							{ beer : { $exists : true } }
 						]
 					},
 					result : { 
 						foo : 'bar',
-						'$and' : [
-							{ bin : { '$ne' : 'baz' } },
-							{ beer : { '$exists' : true } }
+						$and : [
+							{ bin : { $ne : 'baz' } },
+							{ beer : { $exists : true } }
+						]
+					}
+				}
+			},
+			{
+				name : "should handle $and and AND",
+				args : {
+					data : {
+						foo : "fooValue",
+						$and : [
+							{ foo : "foo2" }
+						],
+						AND : [
+							{ foo : "simpleKey" },
+							{ WHERE : { foo : { exists : true } } }
+						]
+					},
+					result : {
+						foo : "fooValue",
+						$and : [
+							{ foo : "foo2" },
+							{ foo : "simpleKey" },
+							{ $and : [{ foo : { $exists : true } }] }
 						]
 					}
 				}
@@ -86,6 +109,29 @@ describe(__filename, function() {
 					}
 				}
 			},
+			{
+				name : "should handle $or and OR",
+				args : {
+					data : {
+						foo : "fooValue",
+						$or : [
+							{ foo : "foo2" }
+						],
+						OR : [
+							{ foo : "simpleKey" },
+							{ WHERE : { foo : { exists : true } } }
+						]
+					},
+					result : {
+						foo : "fooValue",
+						$or : [
+							{ foo : "foo2" },
+							{ foo : "simpleKey" },
+							{ $and : [{ foo : { $exists : true } }] }
+						]
+					}
+				}
+			}
 		];
 		
 		testArray(tests, function(test) {

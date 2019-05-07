@@ -11,7 +11,7 @@ const self = this;
 
 describe(__filename, function() {
 	before(async function(){
-		const connectionString = 'mongodb://mongo-db:27017/';
+		const connectionString = 'mongodb://localhost:27017/';
 		const dbName = 'graphqlhelperstest';
 		const modelDirectoryRoot = '/app/testData/mongoModels/'
 
@@ -35,54 +35,6 @@ describe(__filename, function() {
 				{ _id : mongoHelpers.testId('2'), basic: 'two' },
 				{ _id : mongoHelpers.testId('3'), basic: 'three' }
 			]);
-		});
-
-		describe("success()", function() {
-			const tests = [
-				{
-					name : "should return manual success status",
-					args : {
-						success : false,
-						result : false
-					}
-				},
-				{
-					name : "should return true if undefined",
-					args : {
-						success : undefined,
-						result : true
-					}
-				},
-			];
-			
-			testArray(tests, function(test) {
-				const res = self.findResultResolver.success({success : test.success});
-				deepCheck(res, test.result);
-			});
-		});
-
-		describe("message()", function() {
-			const tests = [
-				{
-					name : "should return message",
-					args : {
-						message : "test message!",
-						result : "test message!"
-					}
-				},
-				{
-					name : "should return empty string",
-					args : {
-						message : undefined,
-						result : ""
-					}
-				},
-			];
-			
-			testArray(tests, function(test) {
-				const res = self.findResultResolver.message({message : test.message});
-				deepCheck(res, test.result);
-			});
 		});
 
 		describe("docs()", function() {
