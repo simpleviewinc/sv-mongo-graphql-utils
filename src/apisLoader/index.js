@@ -5,7 +5,7 @@ const Api = require("./Api");
 const readdirP = util.promisify(fs.readdir);
 
 module.exports = async function({ connectionString, dbName, modelDirectoryRoot }) {
-	const conn = await MongoClient.connect(connectionString, { useNewUrlParser : true });
+	const conn = await MongoClient.connect(connectionString, { useNewUrlParser : true, useUnifiedTopology: true });
 	const db = conn.db(dbName);
 	
 	const apis = {};
