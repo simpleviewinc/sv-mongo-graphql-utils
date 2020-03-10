@@ -1,6 +1,13 @@
 const { gql } = require("apollo-server-express");
+const { 
+	scalars : {
+		objectid_scalar
+	}
+} = require("../../");
 
 const typeDefs = gql`
+	scalar test_objectid
+
 	directive @test_directive(
 		message: String = "testing"
 	) on FIELD_DEFINITION
@@ -32,7 +39,8 @@ const resolvers = {
 		async test(parent, { acct_id }, context, info) {
 			return {};
 		}
-	}
+	},
+	test_objectid : new objectid_scalar("test")
 };
 
 module.exports = {

@@ -23,7 +23,8 @@ describe(__filename, function() {
 				test_query : {},
 				Mutation : {},
 				test_mutation : {},
-				test_result : {}
+				test_result : {},
+				test_objectid : {}
 			}
 
 			deepCheck(res._typeMap, _typeMapCheck);
