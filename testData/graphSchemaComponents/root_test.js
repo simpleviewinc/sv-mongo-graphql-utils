@@ -1,8 +1,10 @@
 const { gql } = require("apollo-server-express");
+const { ObjectId } = require("mongodb");
+const assert = require("assert");
+const { testId } = require("../../src/mongoHelpers");
+
 const { 
-	scalars : {
-		objectid_scalar
-	}
+	scalarObjectId
 } = require("../../");
 
 const typeDefs = gql`
@@ -16,13 +18,18 @@ const typeDefs = gql`
 		test : test_query
 	}
 	
-	type test_query
+	type test_query {
+		simple: String
+		objectid(id: test_objectid): test_objectid
+	}
 	
 	extend type Mutation {
 		test : test_mutation
 	}
 	
-	type test_mutation
+	type test_mutation {
+		simple: String
+	}
 
 	type test_result {
 		message : String @test_directive(message: "testing")
@@ -40,7 +47,25 @@ const resolvers = {
 			return {};
 		}
 	},
-	test_objectid : new objectid_scalar("test")
+	test_query : {
+		simple : function() {
+			return "query_simple";
+		},
+		objectid : function(parent, { id }) {
+			if (id) {
+				assert.strictEqual(id instanceof ObjectId, true);
+				return id;
+			} else {
+				return testId("0")
+			}
+		}
+	},
+	test_mutation : {
+		simple : function() {
+			return "mutation_simple"
+		}
+	},
+	test_objectid : scalarObjectId("test_objectid")
 };
 
 module.exports = {

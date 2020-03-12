@@ -1,10 +1,13 @@
 const { GraphQLScalarType } = require("graphql");
 const { ObjectId } = require("mongodb");
 
-
-function objectid_scalar(prefix){
+/**
+ * Returns an scalar which converts a hex string to an object and back
+ * @param {string} name
+ */
+module.exports = function scalarObjectId(name){
 	return new GraphQLScalarType({
-		name : `${prefix}_objectid`,
+		name,
 		description : "Conversion of string to Mongo ObjectId",
 		serialize(value) {
 			return value.toString();
@@ -18,8 +21,4 @@ function objectid_scalar(prefix){
 			}
 		}
 	});
-}
-
-module.exports = {
-	objectid_scalar
 }
