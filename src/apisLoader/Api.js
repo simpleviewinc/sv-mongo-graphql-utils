@@ -9,6 +9,7 @@ const Api = function(args) {
 	self.pluralLabel = args.def.pluralLabel;
 	self._def = args.def;
 	self._db = args.db;
+	self._backupName = `${self.name}_backup`;
 	
 	self._validation = {
 		// store validation if we can enforce required fields
@@ -18,6 +19,7 @@ const Api = function(args) {
 	}
 	
 	self.collection = self._db.collection(self.name);
+	self._backupCollection = self._db.collection(self._backupName);
 };
 
 // convert the mongodb schema to a jsvalidator variant
@@ -122,7 +124,28 @@ Api.prototype.insertMany = function(data) {
 	return self.collection.insertMany(data);
 }
 
+Api.prototype.backup = async function() {
+	const self = this;
+
+	await self.aggregate([
+		{
+			$out : self._backupName
+		}
+	]).toArray();
+}
+
+Api.prototype.restore = async function() {
+	const self = this;
+
+	await self._backupCollection.aggregate([
+		{
+			$out : self.name
+		}
+	]).toArray();
+}
+
 const additionalMethods = [
+	"aggregate",
 	"find",
 	"findOne",
 	"countDocuments",

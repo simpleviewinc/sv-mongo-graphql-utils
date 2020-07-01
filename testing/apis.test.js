@@ -1,3 +1,4 @@
+const assert = require("assert");
 const { 
 	apisLoader, 
 	graphqlHelpers, 
@@ -355,7 +356,11 @@ describe(__filename, function() {
 
 		describe("api.updateOne", function(){
 			beforeEach(async function() {
-				self.db.collection('basic').deleteMany({});
+				await self.db.collection('basic').deleteMany({});
+			});
+
+			after(async function() {
+				await self.basicApi.deleteMany({});
 			});
 
 			const tests = [
@@ -448,6 +453,33 @@ describe(__filename, function() {
 
 				const res = await self.db.collection('basic').find({ _id : test.id }).toArray();
 				deepCheck(res, test.result);
+			});
+		});
+		
+		describe("backup/restore", function() {
+			after(async function() {
+				await self.basicApi._backupCollection.drop();
+			});
+			
+			it("backup and restore", async function() {
+				await self.basicApi.insertMany([
+					{
+						basic : "one"
+					},
+					{
+						basic : "two"
+					}
+				]);
+
+				await self.basicApi.backup();
+				await self.basicApi.deleteMany({});
+				const items0 = await self.basicApi.find({}).toArray();
+				assert.deepStrictEqual(items0, []);
+				const items1 = await self.basicApi._backupCollection.find({}).project({ _id : 0 }).toArray();
+				assert.deepStrictEqual(items1, [{ basic : "one" }, { basic : "two" }]);
+				await self.basicApi.restore();
+				const items2 = await self.basicApi.find({}).project({ _id : 0 }).toArray();
+				assert.deepStrictEqual(items2, [{ basic : "one" }, { basic : "two" }]);
 			});
 		});
 	});
