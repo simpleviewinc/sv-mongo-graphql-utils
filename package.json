@@ -4,7 +4,7 @@
   "description": "A utility package for graphql running mongo in sv-kubernetes",
   "author": "Joshua Moor <jmoor@simpleviewinc.com>",
   "dependencies": {
-    "apollo-server-express": "2.11.0",
+    "apollo-server-express": "2.15.1",
     "express": "4.17.1",
     "graphql": "14.0.2",
     "jsvalidator": "1.2.0",
