@@ -37,10 +37,14 @@ function mapKeyResolver(key) {
 
 function removeResultResolver(apiName) {
 	return {
-		success : function() {
+		success : function(parent) {
+			if (parent.success !== undefined) { return parent.success; }
+
 			return true;
 		},
 		message : function(parent, args, { apis }, info) {
+			if (parent.message !== undefined) { return parent.message; }
+
 			if (parent.rtn === undefined) {
 				throw new Error("removeResultResolver 'message' resolver requires 'rtn' to be returned from primary resolver");
 			}

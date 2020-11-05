@@ -1,3 +1,4 @@
+const assert = require("assert");
 const { deepCheck } = require("@simpleview/assertlib");
 const { testArray } = require("@simpleview/mochalib");
 
@@ -150,10 +151,12 @@ describe(__filename, function() {
 		});
 
 		describe("success()", function() {
+			it("should default true", function() {
+				assert.strictEqual(self.removeResultResolver.success({}), true)
+			});
+
 			it("should only return true", function(){
-				const success = false;
-				const res = self.removeResultResolver.success({success});
-				deepCheck(res, true);
+				assert.strictEqual(self.removeResultResolver.success({ success : false }), false);
 			});
 		});
 
@@ -188,6 +191,15 @@ describe(__filename, function() {
 						error : new Error("removeResultResolver 'message' resolver requires 'rtn' to be returned from primary resolver")
 					}
 				},
+				{
+					name : "should return previous message",
+					args : {
+						parent : {
+							message : "test"
+						},
+						result : "test"
+					}
+				}
 			];
 			
 			testArray(tests, function(test) {
@@ -370,7 +382,6 @@ describe(__filename, function() {
 					const res = await self.upsertResultResolver.doc(test.parent, test.args, { apis : self.apis }, test.info);
 					deepCheck(res, test.result);
 				}catch(err){
-					console.log('error', err.message);
 					deepCheck(err.message, test.error.message);
 				}
 			});
