@@ -92,9 +92,24 @@ function testId(str) {
 	return ObjectId(padded);
 }
 
+/**
+ * @type {import("../types").pickDefined}
+ */
+const pickDefined = function(obj, keys) {
+	const temp = {};
+	for (let key of keys) {
+		if (obj[key] !== undefined) {
+			temp[key] = obj[key];
+		}
+	}
+
+	return temp;
+}
+
 module.exports = {
 	createFilter,
 	createOptions,
+	pickDefined,
 	setUnsetKey,
 	testId,
 }

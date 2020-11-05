@@ -1,3 +1,4 @@
+const assert = require("assert");
 const { deepCheck } = require("@simpleview/assertlib");
 const { testArray } = require("@simpleview/mochalib");
 
@@ -299,6 +300,40 @@ describe(__filename, function() {
 			}catch(err){
 				deepCheck(err.message, test.errorMessage);
 			}
+		});
+	});
+
+	describe("pickDefined", function() {
+		const tests = [
+			{
+				name : "should pick defined keys",
+				args : {
+					obj : { foo : true, bar : "barValue", baz : 10 },
+					keys : ["foo", "bar", "baz"],
+					result : { foo : true, bar : "barValue", baz : 10 }
+				}
+			},
+			{
+				name : "should ignore undefined",
+				args : {
+					obj : { foo : true, bar : undefined, baz : null },
+					keys : ["foo", "bar", "baz"],
+					result : { foo : true, baz : null }
+				}
+			},
+			{
+				name : "should not pick undeclared keys",
+				args : {
+					obj : { foo : true, bar : "something" },
+					keys : ["foo", "bogus"],
+					result : { foo : true }
+				}
+			}
+		];
+
+		testArray(tests, function(test) {
+			const result = mongoHelpers.pickDefined(test.obj, test.keys);
+			assert.deepStrictEqual(result, test.result);
 		});
 	});
 });

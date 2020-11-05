@@ -114,6 +114,18 @@ const resolvers = {
 }
 ```
 
+### pickDefined
+Returns an object based on the keys specified which are not-undefined. Useful when creating filters are passing keys on to mongo for filtering.
+
+* obj - Object to start with.
+* keys - `string[]` keys to pick.
+
+```js
+const { mongoHelpers : { pickDefined } } = require("@simpleview/sv-mongo-graphql-utils");
+const result = pickDefined({ foo : "fooValue", bar : true, baz : undefined }, ["foo", "baz", "qux"]);
+assert.strictEqual(result, { foo : "fooValue" });
+```
+
 ### testId
 Builds a MongoDB ObjectID from a string. Commonly used to build unit test data so you can achieve predictable, but valid, mongodb ObjectIDs.
 
