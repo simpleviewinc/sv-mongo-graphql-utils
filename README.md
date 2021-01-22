@@ -68,7 +68,7 @@ module.exports = function() {
 		indexes : [
 			{
 				keys : {
-					_id : 1
+					name : 1
 				}
 			}
 		]
