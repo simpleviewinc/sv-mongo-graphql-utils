@@ -30,6 +30,51 @@ const server = new ApolloServer({
   }
 });
 ```
+### Model files
+Model files use mongo's [$jsonSchma)](https://docs.mongodb.com/manual/reference/operator/query/jsonSchema/#json-schema)
+
+Model file example:
+```js
+module.exports = function() {
+	return {
+		label : 'modelName',
+		pluralLabel : 'modelNamePlural',
+		schema : {
+			bsonType : 'object',
+			required : ['name', 'date'],
+			additionalProperties : false,
+			properties : {
+				_id : {
+					bsonType : 'objectId'
+				},
+				name : {
+					bsonType : 'string'
+				},
+				date : {
+					bsonType : 'date'
+				},
+				related_id : {
+					bsonType : 'objectId'
+				},
+				related_ids : {
+					bsonType : 'array',
+					items : {
+						bsonType : 'objectId'
+					},
+					uniqueItems : true
+				}
+			}
+		},
+		indexes : [
+			{
+				keys : {
+					_id : 1
+				}
+			}
+		]
+	};
+}
+```
   
 ## schemaLoader
 
@@ -47,6 +92,24 @@ const server = new ApolloServer({
   schema,
   ...
 });
+```
+## scalarObjectId
+A returnable scalar which converts a hex string to an object and back utilizing mongo [objectId](https://docs.mongodb.com/manual/reference/method/ObjectId/) 
+
+* args
+  * name - application prefixed scalar name
+
+```js
+const { scalarObjectId } = require("@simpleview/sv-mongo-graphql-utils");
+
+const typedef = {
+  scalar : prefixNameScalar
+}
+
+const resolvers = {
+  prefixNameScalar: scalarObjectId("prefixNameScalar")
+}
+
 ```
 
 ## mongoHelpers
