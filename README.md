@@ -31,7 +31,7 @@ const server = new ApolloServer({
 });
 ```
 ### Model files
-Model files use mongo's [$jsonSchma](https://docs.mongodb.com/manual/reference/operator/query/jsonSchema/#json-schema)
+Model files use mongo's [$jsonSchema](https://docs.mongodb.com/manual/reference/operator/query/jsonSchema/#json-schema)
 
 Model file example:
 ```js
