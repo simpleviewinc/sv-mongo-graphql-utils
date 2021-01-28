@@ -78,7 +78,7 @@ module.exports = function() {
   
 ## schemaLoader
 
-schemaLoader merges all of your schema files into a single schema. This allows you to make your larger schema more maintainable by splitting it up into logical units. It will take every schema file present in the `graphqlRootDirectory` and merge it into one schema. An example of a module schema is outlined in [Modularizing Your GraphQL Schema](https://www.apollographql.com/blog/modularizing-your-graphql-schema-code-d7f71d5ed5f2/).
+schemaLoader takes all of the files present in `graphqlRootDirectory` and merges them into a single schema. This allows you to make your larger schema more maintainable by splitting it up into logical units. An example of a modular schema is outlined in [Modularizing Your GraphQL Schema](https://www.apollographql.com/blog/modularizing-your-graphql-schema-code-d7f71d5ed5f2/).
 
 * args
   * graphqlRootDirectory - folder containing graphql schema files which contain resolvers, types, directives, scalars, etc.
