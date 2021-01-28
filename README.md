@@ -93,6 +93,82 @@ const server = new ApolloServer({
   ...
 });
 ```
+### Schema Files
+"Schema definitionsin the Schema Definition Language (SDL) are just strings. Treating them as such, we have a simple way of importing type definitions across different files: Split up the string into multiple strings that we can combine later." - [https://www.apollographql.com/blog/modularizing-your-graphql-schema-code-d7f71d5ed5f2/][Modularizing Graphql] 
+
+Root schema file example:
+```js
+const { gql } = require("apollo-server-express");
+
+const typeDefs = gql`
+	type Query {
+		prefix: prefix_query
+	}
+
+	type prefix_query
+
+	type Mutation {
+		prefix: prefix_mutation
+	}
+
+	type prefix_mutation
+
+	type prefix_result {
+		success : Boolean!
+		message : String
+	}
+`;
+
+
+const resolvers = {
+	Query : {
+		prefix(parent, args, context, info) {
+			return {};
+		}
+	},
+	Mutation : {
+		prefix(parent, args, context, info) {
+			return {};
+		}
+	}
+};
+
+module.exports = {
+	typeDefs,
+	resolvers
+}
+```
+Modular schema file example:
+```js
+const { gql } = require("apollo-server-express");
+
+const typeDefs = gql`
+	extend type prefix_query {
+        resolver_query: prefix_result
+    }
+	
+	extend type prefix_mutation {
+        resolver_mutation: prefix_result
+    }
+`;
+const resolvers = {
+	prefix_query  : {
+		resolver_query(parent, args, context, info) {
+			return {};
+		}
+	},
+	prefix_mutation : {
+		resolver_mutation(parent, args, context, info) {
+			return {};
+		}
+	}
+};
+module.exports = {
+	typeDefs,
+	resolvers
+}
+```
+
 ## scalarObjectId
 A returnable scalar which converts a hex string to an object and back utilizing mongo [objectId](https://docs.mongodb.com/manual/reference/method/ObjectId/) 
 
