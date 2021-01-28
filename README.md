@@ -81,7 +81,7 @@ module.exports = function() {
 Processes a folder of schema files and returns them for use in an apollo server.
 
 * args
-  * graphqlRootDirectory - folder containing graphql schema components (resolvers, types, directives, scalars, etc.)
+  * graphqlRootDirectory - folder containing graphql schema components (resolvers, types, [https://www.apollographql.com/docs/apollo-server/schema/directives/](directives), scalars, etc.)
 
 ```js
 const { schemaLoader } = require("@simpleview/sv-mongo-graphql-utils");
@@ -168,7 +168,6 @@ module.exports = {
 	resolvers
 }
 ```
-
 ## scalarObjectId
 A returnable scalar which converts a hex string to an object and back utilizing mongo [objectId](https://docs.mongodb.com/manual/reference/method/ObjectId/) 
 
