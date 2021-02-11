@@ -8,8 +8,8 @@
     "express": "4.17.1",
     "graphql": "14.0.2",
     "jsvalidator": "1.2.0",
-    "lodash": "4.17.15",
-    "mongodb": "3.1.10"
+    "lodash": "4.17.20",
+    "mongodb": "3.6.4"
   },
   "devDependencies": {
     "@simpleview/mochalib": "1.0.1",

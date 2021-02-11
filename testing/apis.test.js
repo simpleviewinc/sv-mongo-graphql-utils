@@ -209,9 +209,7 @@ describe(__filename, function() {
 						},
 						result : [
 							{
-								s : {
-									name : 'basic'
-								}
+								collectionName : "basic"
 							}
 						]
 					}

@@ -56,8 +56,15 @@ Api.prototype.init = async function() {
 	const self = this;
 	
 	// create collection
-	await self._db.createCollection(self.name);
-	
+	try {
+		await self._db.createCollection(self.name);
+	} catch(e) {
+		// err code 48 represents that the collection already exists, which is not a real problem, so we ignore
+		if (e.code !== 48) {
+			throw e;
+		}
+	}
+
 	// apply validation
 	await self._db.command({
 		collMod : self.name,
