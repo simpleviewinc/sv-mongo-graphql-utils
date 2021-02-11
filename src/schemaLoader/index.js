@@ -1,16 +1,14 @@
 const { makeExecutableSchema } = require("apollo-server-express");
-const fs = require("fs");
-const util = require("util");
+const { readdirRegex } = require("../utils");
 const lodash = require("lodash");
-
-const readdirP = util.promisify(fs.readdir);
 
 module.exports = async function({ graphqlRootDirectory }) {
 	const typeDefs = [];
 	const resolvers = [{}];
 	const schemaDirectives = {};
 	
-	const dirResult = await readdirP(graphqlRootDirectory);
+	const dirResult = await readdirRegex(graphqlRootDirectory, /\.js$/);
+
 	for(let name of dirResult) {
 		const temp = require(`${graphqlRootDirectory}/${name}`);
 		

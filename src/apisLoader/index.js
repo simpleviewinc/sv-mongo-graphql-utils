@@ -1,15 +1,14 @@
 const { MongoClient } = require("mongodb");
-const fs = require("fs");
-const util = require("util");
+const { readdirRegex } = require("../utils");
+
 const Api = require("./Api");
-const readdirP = util.promisify(fs.readdir);
 
 module.exports = async function({ connectionString, dbName, modelDirectoryRoot }) {
 	const conn = await MongoClient.connect(connectionString, { useNewUrlParser : true });
 	const db = conn.db(dbName);
 	
 	const apis = {};
-	const dirResult = await readdirP(modelDirectoryRoot);
+	const dirResult = await readdirRegex(modelDirectoryRoot, /\.js$/);
 	
 	for(let file of dirResult) {
 		let name = file.replace(/\.js$/, "");
