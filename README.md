@@ -365,6 +365,15 @@ In order to use removeResultResolver your primary resolver should return `{ rtn 
 
 This will cause the result to return `{ success, message }`.
 
+## readdirRegex
+
+Returns all files in a folder that match a regex.
+
+```js
+const { readdirRegex } = require("@simpleview/sv-mongo-graphql-utils");
+const content = await utils.readdirRegex("/path/to/folder", /.js$/);
+```
+
 # Development
 
 * Enter dev environment - `sudo npm run docker`
