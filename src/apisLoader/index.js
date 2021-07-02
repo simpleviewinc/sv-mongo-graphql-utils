@@ -3,7 +3,7 @@ const { readdirRegex } = require("../utils");
 
 const Api = require("./Api");
 
-module.exports = async function({ connectionString, dbName, modelDirectoryRoot }) {
+module.exports = async function({ connectionString, dbName, modelDirectoryRoot, setupCollections = true }) {
 	const conn = await MongoClient.connect(connectionString, { useNewUrlParser : true, useUnifiedTopology: true });
 	const db = conn.db(dbName);
 	
@@ -19,7 +19,10 @@ module.exports = async function({ connectionString, dbName, modelDirectoryRoot }
 			db
 		});
 
-		await api.init();
+		if (setupCollections === true) {
+			// only init if we need to
+			await api.init();
+		}
 		
 		apis[name] = api;
 	}

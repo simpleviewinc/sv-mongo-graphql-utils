@@ -155,6 +155,7 @@ const additionalMethods = [
 	"aggregate",
 	"find",
 	"findOne",
+	"findOneAndUpdate",
 	"countDocuments",
 	"distinct",
 	"deleteOne",
