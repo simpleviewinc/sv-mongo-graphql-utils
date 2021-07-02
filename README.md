@@ -7,6 +7,7 @@ Connects to mongodb and loads a folder of model files allowing them to be querie
   * connectionString - a string used to connect to a mongo database server
   * dbName - name of the database the apis will be used on
   * modelDirectoryRoot - folder containing one or more models to be used in the DB
+  * setupCollections - default true - If true, then when connecting it will update index definitions, and schema validation for each declared Model. Pass false in cases where you don't need this, such as in unit tests or if multiple containers utilize the same Model files, to speed connection times.
 
 * Returns `Promise` which resolves to
   * apis - Object with a key for each model.
