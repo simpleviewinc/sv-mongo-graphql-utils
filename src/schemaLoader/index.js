@@ -1,4 +1,4 @@
-const { makeExecutableSchema } = require("apollo-server-express");
+const { makeExecutableSchema } = require("@graphql-tools/schema");
 const { readdirRegex } = require("../utils");
 const lodash = require("lodash");
 
