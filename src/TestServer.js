@@ -1,8 +1,8 @@
+const { schemaLoader } = require("@simpleview/sv-graphql-client");
 const { ApolloServer } = require("apollo-server-express");
+
 const express = require("express");
 const util = require("util");
-
-const schemaLoader = require("./schemaLoader");
 
 class TestServer {
 	/**
@@ -25,18 +25,20 @@ class TestServer {
 		});
 
 		const server = new ApolloServer({
-			schema : await schemaLoader({ graphqlRootDirectory : this.path })
+			schema : await schemaLoader({ paths : [this.path] })
 		});
-		
+
+		await server.start();
+
 		server.applyMiddleware({
 			app,
 			path : "/"
 		});
-		
+
 		return new Promise((resolve, reject) => {
 			const expressServer = app.listen(this.port, function(err) {
 				if (err) { return reject(err); }
-				
+
 				resolve();
 			});
 
