@@ -1,6 +1,6 @@
 {
   "name": "@simpleview/sv-mongo-graphql-utils",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "A utility package for graphql running mongo in sv-kubernetes",
   "author": "Joshua Moor <jmoor@simpleviewinc.com>",
   "dependencies": {
