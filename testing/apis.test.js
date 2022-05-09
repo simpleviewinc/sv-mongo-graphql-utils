@@ -1,9 +1,7 @@
 const assert = require("assert");
-const { 
-	apisLoader, 
-	graphqlHelpers, 
-	mongoHelpers, 
-	schemaLoader 
+const {
+	apisLoader,
+	mongoHelpers,
 } = require("../");
 const { deepCheck } = require("@simpleview/assertlib");
 const { MongoClient } = require("mongodb");
@@ -27,7 +25,7 @@ describe(__filename, function() {
 			self.db = self.conn.db(dbName);
 
 			self.basicDef = require('../testData/mongoModels/basic.js')();
-				
+
 			self.basicApi = new API({
 				name : 'basic',
 				def : self.basicDef,
@@ -62,7 +60,7 @@ describe(__filename, function() {
 					name : 'should set _def',
 					args : {
 						key : '_def',
-						method : () => { 
+						method : () => {
 							const def = require('../testData/mongoModels/basic.js')();
 							return def;
 						}
@@ -226,7 +224,7 @@ describe(__filename, function() {
 								[ '_id', 1 ]
 							],
 							_id_1_test_1 : [
-								[ '_id', 1 ], 
+								[ '_id', 1 ],
 								[ 'test', 1 ]
 							]
 						}
@@ -254,7 +252,7 @@ describe(__filename, function() {
 						result : [
 							{
 								_id : mongoHelpers.testId('1'),
-								basic : 'insertOne' 
+								basic : 'insertOne'
 							}
 						]
 					}
@@ -281,39 +279,39 @@ describe(__filename, function() {
 					name : 'should insert many',
 					args : {
 						data : [
-							{ 
-								_id : mongoHelpers.testId('1'), 
-								basic: 'insertOne' 
+							{
+								_id : mongoHelpers.testId('1'),
+								basic: 'insertOne'
 							},
-							{ 
-								_id : mongoHelpers.testId('2'), 
-								basic: 'insertTwo' 
+							{
+								_id : mongoHelpers.testId('2'),
+								basic: 'insertTwo'
 							},
-							{ 
-								_id : mongoHelpers.testId('3'), 
-								basic: 'insertThree' 
+							{
+								_id : mongoHelpers.testId('3'),
+								basic: 'insertThree'
 							},
-							{ 
-								_id : mongoHelpers.testId('4'), 
-								basic: 'insertFour' 
+							{
+								_id : mongoHelpers.testId('4'),
+								basic: 'insertFour'
 							},
 						],
 						result : [
 							{
 								_id : mongoHelpers.testId('1'),
-								basic : 'insertOne' 
+								basic : 'insertOne'
 							},
 							{
 								_id : mongoHelpers.testId('2'),
-								basic : 'insertTwo' 
+								basic : 'insertTwo'
 							},
 							{
 								_id : mongoHelpers.testId('3'),
-								basic : 'insertThree' 
+								basic : 'insertThree'
 							},
 							{
 								_id : mongoHelpers.testId('4'),
-								basic : 'insertFour' 
+								basic : 'insertFour'
 							}
 						]
 					}
@@ -322,16 +320,16 @@ describe(__filename, function() {
 					name : 'should not insert many with invalid data',
 					args : {
 						data : [
-							{ 
-								_id : mongoHelpers.testId('1'), 
-								basic: 'insertOne' 
+							{
+								_id : mongoHelpers.testId('1'),
+								basic: 'insertOne'
 							},
-							{  
-								_id : mongoHelpers.testId('2'), 
+							{
+								_id : mongoHelpers.testId('2'),
 							},
-							{ 
-								_id : mongoHelpers.testId('3'), 
-								basic: 'insertThree' 
+							{
+								_id : mongoHelpers.testId('3'),
+								basic: 'insertThree'
 							},
 						],
 						error : "Required field 'basic' does not exist."
@@ -373,7 +371,7 @@ describe(__filename, function() {
 						result : [
 							{
 								_id : mongoHelpers.testId('1'),
-								basic : 'updated' 
+								basic : 'updated'
 							}
 						]
 					}
@@ -382,9 +380,9 @@ describe(__filename, function() {
 					name : 'should update one $set && $setOnInsert',
 					args : {
 						insert : true,
-						update : { 
+						update : {
 							$set : { basic : 'updated' },
-							$setOnInsert : {  _id : mongoHelpers.testId('1') } 
+							$setOnInsert : {  _id : mongoHelpers.testId('1') }
 						},
 						filter : { _id : mongoHelpers.testId('1') },
 						options : {},
@@ -392,7 +390,7 @@ describe(__filename, function() {
 						result : [
 							{
 								_id : mongoHelpers.testId('1'),
-								basic : 'updated' 
+								basic : 'updated'
 							}
 						]
 					}
@@ -401,11 +399,11 @@ describe(__filename, function() {
 					name : 'should not update with only $setOnInsert',
 					args : {
 						insert : true,
-						update : { 
-							$setOnInsert : {  
+						update : {
+							$setOnInsert : {
 								_id : mongoHelpers.testId('1'),
 								basic : 'updated'
-							} 
+							}
 						},
 						filter : { _id : mongoHelpers.testId('1') },
 						options : {},
@@ -413,7 +411,7 @@ describe(__filename, function() {
 						result : [
 							{
 								_id : mongoHelpers.testId('1'),
-								basic : 'updateTarget' 
+								basic : 'updateTarget'
 							}
 						]
 					}
@@ -422,7 +420,7 @@ describe(__filename, function() {
 					name : 'should update upsert',
 					args : {
 						insert : false,
-						update : { 
+						update : {
 							$set : { basic : 'upserted' },
 							$setOnInsert : {  _id : mongoHelpers.testId('1') }
 						},
@@ -432,7 +430,7 @@ describe(__filename, function() {
 						result : [
 							{
 								_id : mongoHelpers.testId('1'),
-								basic : 'upserted' 
+								basic : 'upserted'
 							}
 						]
 					}
@@ -453,12 +451,12 @@ describe(__filename, function() {
 				deepCheck(res, test.result);
 			});
 		});
-		
+
 		describe("backup/restore", function() {
 			after(async function() {
 				await self.basicApi._backupCollection.drop();
 			});
-			
+
 			it("backup and restore", async function() {
 				await self.basicApi.insertMany([
 					{

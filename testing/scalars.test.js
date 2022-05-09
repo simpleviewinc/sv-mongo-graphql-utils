@@ -1,15 +1,14 @@
 const { testArray } = require("@simpleview/mochalib");
-const { query } = require("@simpleview/sv-graphql-client");
+const { query, TestServer } = require("@simpleview/sv-graphql-client");
 const assert = require("assert");
 
 const { testId } = require("../src/mongoHelpers");
-const TestServer = require("../src/TestServer");
 
 describe(__filename, function() {
 	let testServer;
 
 	before(async function() {
-		testServer = new TestServer({ port : 10000, path : '/app/testData/graphSchemaComponents/' });
+		testServer = new TestServer({ port : 10000, paths : ['/app/testData/graphSchemaComponents/'] });
 		await testServer.boot();
 	});
 

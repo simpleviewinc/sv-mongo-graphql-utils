@@ -1,4 +1,4 @@
-FROM node:10.14
+FROM node:14.16.0
 
 # install mongodb inside the docker container
 RUN touch /bin/systemctl && \
