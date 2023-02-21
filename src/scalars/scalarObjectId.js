@@ -13,11 +13,11 @@ module.exports = function scalarObjectId(name){
 			return value.toString();
 		},
 		parseValue(value) {
-			return ObjectId(value);
+			return new ObjectId(value);
 		},
 		parseLiteral(ast) {
 			if (ast.kind === "StringValue") {
-				return ObjectId(ast.value);
+				return new ObjectId(ast.value);
 			}
 		}
 	});
