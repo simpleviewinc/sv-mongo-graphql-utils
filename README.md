@@ -100,6 +100,8 @@ const resolvers = {
 
 Utility methods to make it easier to work with MongoDB from GraphQL.
 
+This repo now uses `peerDependencies` with `mongodb` version ^5.0.0. To utilize please ensure that you have a current version of `mongodb` installed in your application.
+
 ### createFilter
 
 Builds a mongo filter from a graphql filter object. Supports `WHERE`, `AND`, and `OR` as well as most mongodb operators.

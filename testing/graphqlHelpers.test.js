@@ -12,7 +12,7 @@ const self = this;
 
 describe(__filename, function() {
 	before(async function(){
-		const connectionString = 'mongodb://localhost:27017/';
+		const connectionString = 'mongodb://mongo:27017/';
 		const dbName = 'graphqlhelperstest';
 		const modelDirectoryRoot = '/app/testData/mongoModels/'
 

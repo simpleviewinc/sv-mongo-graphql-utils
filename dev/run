@@ -1,8 +1,6 @@
 #!/bin/bash
-docker run --rm -it \
-	-v $PWD/src:/app/src \
-	-v $PWD/testData:/app/testData \
-	-v $PWD/testing:/app/testing \
-	-v $PWD/package.json:/app/package.json \
-	-v $PWD/../sv-mongo-graphql-utils/src/:/app/node_modules/@simpleview/sv-mongo-graphql-utils \
-	sv-mongo-graphql-utils:local /bin/sh
+set -e
+
+docker compose build node
+docker compose run --rm node /bin/bash
+docker compose down

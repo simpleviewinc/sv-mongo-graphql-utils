@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  node:
+    build: "."
+    image: sv-mongo-graphql-utils:local
+    environment:
+      PG_HOST: "pg"
+    volumes:
+      - "./package.json:/app/package.json"
+      - "./src:/app/src"
+      - "./testData:/app/testData"
+      - "./testing:/app/testing"
+    depends_on:
+      - "mongo"
+  mongo:
+    image: mongo:6.0
+    environment:
+      POSTGRES_PASSWORD: admin

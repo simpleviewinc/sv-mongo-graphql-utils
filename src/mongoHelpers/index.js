@@ -89,7 +89,7 @@ function testId(str) {
 
 	const encoded = Buffer.from(str).toString("hex");
 	const padded = encoded.padStart(24, "0");
-	return ObjectId(padded);
+	return new ObjectId(padded);
 }
 
 /**
