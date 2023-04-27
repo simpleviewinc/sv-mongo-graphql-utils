@@ -14,7 +14,7 @@
 		"@simpleview/assertlib": "1.0.1",
 		"@simpleview/sv-graphql-client": "4.0.0",
 		"graphql-tag": "2.12.6",
-		"mocha": "5.2.0",
+		"mocha": "10.2.0",
 		"mongodb": "5.0.0"
 	},
 	"peerDependencies": {
