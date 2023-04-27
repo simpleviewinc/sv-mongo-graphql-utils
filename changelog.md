@@ -1,5 +1,9 @@
 # sv-mongo-graph-utils changelog
 
+## 4/27/2023
+* Removed `apollo-server`
+* Added `graphql-tag` to `devDependencies`
+
 ## 2/21/2023
 * Updated `mongodb` package to 5.0.0 from 3.6.4
 * Added mongo `peerDependencies` ^5.0.0
