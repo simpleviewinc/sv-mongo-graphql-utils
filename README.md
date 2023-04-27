@@ -24,6 +24,9 @@ const { apis, conn } = await apisLoader({
 
 const server = new ApolloServer({
   ...
+});
+
+await startStandaloneServer(server, {
   context: ({ req }) => {
     return {
       apis

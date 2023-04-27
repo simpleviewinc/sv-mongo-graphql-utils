@@ -1,34 +1,34 @@
 {
-  "name": "@simpleview/sv-mongo-graphql-utils",
-  "version": "4.0.0",
-  "description": "A utility package for graphql running mongo in sv-kubernetes",
-  "author": "Joshua Moor <jmoor@simpleviewinc.com>",
-  "dependencies": {
-    "apollo-server": "3.6.7",
-    "express": "4.17.1",
-    "graphql": ">15.2.0",
-    "jsvalidator": "1.2.0",
-    "lodash": "4.17.20"
-  },
-  "devDependencies": {
-    "@simpleview/mochalib": "1.0.1",
-    "@simpleview/assertlib": "1.0.1",
-    "@simpleview/sv-graphql-client": "2.0.1",
-    "mocha": "5.2.0",
-    "mongodb": "5.0.0"
-  },
-  "peerDependencies": {
-    "mongodb": "^5.0.0"
-  },
-  "main": "src/index.js",
-  "scripts": {
-    "test": "mocha testing",
-    "docker": "bash ./dev/run",
-    "publish": "./dev/publish"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/simpleviewinc/sv-mongo-graphql-utils"
-  },
-  "license": "MIT"
+	"name": "@simpleview/sv-mongo-graphql-utils",
+	"version": "4.1.1",
+	"description": "A utility package for graphql running mongo in sv-kubernetes",
+	"author": "Joshua Moor <jmoor@simpleviewinc.com>",
+	"dependencies": {
+		"express": "4.17.1",
+		"graphql": ">15.2.0",
+		"jsvalidator": "1.2.0",
+		"lodash": "4.17.20"
+	},
+	"devDependencies": {
+		"@simpleview/mochalib": "1.0.1",
+		"@simpleview/assertlib": "1.0.1",
+		"@simpleview/sv-graphql-client": "4.0.0",
+		"graphql-tag": "2.12.6",
+		"mocha": "5.2.0",
+		"mongodb": "5.0.0"
+	},
+	"peerDependencies": {
+		"mongodb": "^5.0.0"
+	},
+	"main": "src/index.js",
+	"scripts": {
+		"test": "mocha testing",
+		"docker": "bash ./dev/run",
+		"publish": "./dev/publish"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/simpleviewinc/sv-mongo-graphql-utils"
+	},
+	"license": "MIT"
 }

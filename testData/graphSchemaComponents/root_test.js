@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server-express");
+const gql = require("graphql-tag");
 const { ObjectId } = require("mongodb");
 const assert = require("assert");
 const { testId } = require("../../src/mongoHelpers");
