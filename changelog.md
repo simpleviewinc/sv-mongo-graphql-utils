@@ -1,5 +1,8 @@
 # sv-mongo-graph-utils changelog
 
+## 2/19/2025
+* Upgrades to address CVE security vulnerabilities. [MCE-1461](https://simpleviewtools.atlassian.net/browse/MCE-1461).
+
 ## 4/27/2023
 * Removed `apollo-server`
 * Added `graphql-tag` to `devDependencies`
