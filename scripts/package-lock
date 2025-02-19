@@ -1,0 +1,7 @@
+#!/bin/sh
+# copies the package-lock.json files out of the shared and client containers so that pull requests don't get complicated
+docker create --name sv-mongo-graphql-utils sv-mongo-graphql-utils:local /bin/sh
+docker cp sv-mongo-graphql-utils:/app/package.json /sv/containers/sv-mongo-graphql-utils/package.json
+docker cp sv-mongo-graphql-utils:/app/package-lock.json /sv/containers/sv-mongo-graphql-utils/package-lock.json
+docker rm -fv sv-mongo-graphql-utils
+echo "complete"

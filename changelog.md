@@ -2,6 +2,7 @@
 
 ## 2/19/2025
 * Upgrades to address CVE security vulnerabilities. [MCE-1461](https://simpleviewtools.atlassian.net/browse/MCE-1461).
+* Upgraded `node` in Dockerfile from `14.16.0` to `16.20.2`.
 
 ## 4/27/2023
 * Removed `apollo-server`
