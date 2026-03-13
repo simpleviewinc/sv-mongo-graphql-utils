@@ -21,7 +21,7 @@ describe(__filename, function() {
 		before(async function() {
 			const connectionString = 'mongodb://mongo:27017/';
 			const dbName = "apijstest";
-			self.conn = await MongoClient.connect(connectionString, { useNewUrlParser : true, useUnifiedTopology: true });
+			self.conn = await MongoClient.connect(connectionString);
 			self.db = self.conn.db(dbName);
 
 			self.basicDef = require('../testData/mongoModels/basic.js')();
