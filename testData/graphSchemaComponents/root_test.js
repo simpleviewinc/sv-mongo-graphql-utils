@@ -1,4 +1,3 @@
-const gql = require("graphql-tag");
 const { ObjectId } = require("mongodb");
 const assert = require("assert");
 const { testId } = require("../../src/mongoHelpers");
@@ -7,7 +6,7 @@ const {
 	scalarObjectId
 } = require("../../");
 
-const typeDefs = gql`
+const typeDefs = `#graphql
 	scalar test_objectid
 
 	directive @test_directive(

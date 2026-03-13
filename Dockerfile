@@ -1,4 +1,4 @@
-FROM node:16.20.2
+FROM node:24.14.0
 
 COPY package.json /app/package.json
 RUN cd /app && npm install

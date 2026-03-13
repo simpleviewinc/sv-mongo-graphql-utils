@@ -1,6 +1,4 @@
-const gql = require("graphql-tag");
-
-const typeDefs = gql`
+const typeDefs = `#graphql
 	type Query
 	type Mutation
 `;

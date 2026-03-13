@@ -4,7 +4,7 @@ const { readdirRegex } = require("../utils");
 const Api = require("./Api");
 
 module.exports = async function({ connectionString, dbName, modelDirectoryRoot, setupCollections = true }) {
-	const conn = await MongoClient.connect(connectionString, { useNewUrlParser : true, useUnifiedTopology: true });
+	const conn = await MongoClient.connect(connectionString);
 	const db = conn.db(dbName);
 	
 	const apis = {};
